@@ -90,7 +90,7 @@ function svg() {
   var el = document.createElementNS(XLMNS, "svg");
   el.setAttribute('xlmns', XLMNS);
   el.setAttribute('version', "1.1");
-  el.setAttribute('viewBox', "0 0 200 300");
+  el.setAttribute('viewBox', "0 0 200 180");
   return el;
 }
 
