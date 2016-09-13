@@ -1,0 +1,17 @@
+{
+  "name": "chordtabs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/tab.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "min": "node bin/makeMin.js"
+  },
+  "author": "Ben Harrington",
+  "license": "ISC",
+  "dependencies": {
+    "uglify-js": "^2.4.10"
+  }
+}
