@@ -11,7 +11,7 @@ svg {
 
 <c-tab chord="g" instrument="guitar"></c-tab>
 
-<script src="https://cdn.rawgit.com/blh0021/chordTab/master/src/tab.min.js"></script>
+<script src="https://gitcdn.xyz/repo/blh0021/chordTab/master/src/tab.min.js"></script>
 ```
 
 ## Instrument Options
