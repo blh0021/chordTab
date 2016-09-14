@@ -5,12 +5,14 @@ var tabHeight = 150
 var fretHeight = tabHeight / 5;
 var fingerSize = 8;
 
+/*
 if (window.chrome) {
   var CTab = document.registerElement('c-tab', {
     prototype: Object.create(HTMLElement.prototype),
     extends: "div"
   });
 }
+*/
 
 var chordJson = {
   "banjo": {
