@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <center>
+  <div class="w3-card">
+    <div class="w3-container w3-teal w3-section">Ukulele</div>
+    <div id="ukulele" class="w3-container"></div>
+  </div>
+  <div class="w3-card">
+    <div class="w3-container w3-teal w3-section">Guitar</div>
+    <div id="guitar" class="w3-container"></div>
+  </div>
+  <div class="w3-card">
+    <div class="w3-container w3-teal w3-section">Mandolin</div>
+    <div id="mandolin" class="w3-container"></div>
+  </div>
+  <script>
+        var ins = ["ukulele", "guitar", "mandolin"];
+        var notes = ["A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab"];
+        for (var j=0; j<ins.length; j++){
+          for (var i=0; i< notes.length; i++) {
+            var e1 = document.createElement("c-tab");
+            e1.setAttribute("chord", notes[i]);
+            e1.setAttribute("instrument", ins[j]);
 
-  <c-tab chord="d" instrument="ukulele"></c-tab>
-  <c-tab chord="c" instrument="ukulele"></c-tab>
+            var cont = document.getElementById(ins[j])
+            cont.appendChild(e1);
+          }
+        }
 
-  <c-tab chord="a" instrument="guitar"></c-tab>
-  <c-tab chord="c" instrument="guitar"></c-tab>
-  <c-tab chord="g" instrument="guitar"></c-tab>
+  </script>
+
 </center>
 
 <script src="../src/tab.js"></script>

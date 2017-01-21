@@ -5,81 +5,62 @@ var tabHeight = 150
 var fretHeight = tabHeight / 5;
 var fingerSize = 8;
 
-/*
-if (window.chrome) {
-  var CTab = document.registerElement('c-tab', {
-    prototype: Object.create(HTMLElement.prototype),
-    extends: "div"
-  });
-}
-*/
+var chordsData = {
+  "A": ["A", "C#", "E"],
+  "Bb": ["Bb", "D", "F"],
+  "B": ["B", "Eb", "F#"],
+  "C": ["C", "E", "G"],
+  "C#": ["C#", "F", "Ab"],
+  "D": ["D", "F#", "A"],
+  "Eb": ["Eb", "G", "Bb"],
+  "E": ["E", "Ab", "B"],
+  "F": ["F", "A", "C"],
+  "F#": ["F#", "Bb", "C#"],
+  "G": ["G", "B", "D"]
+};
 
-var chordJson = {
-  "banjo": {
-    "a": [-1,2,2,2,2],
-    "b": [-1,1,4,0,4],
-    "c": [0,2,0,1,2],
-    "d": [-1,0,2,3,4],
-    "e": [-1,2,1,0,2],
-    "f": [-1.3,2,1,3],
-    "g": [0,5,4,3,4]
-  },
- "guitar": {
-    "a": [-1,0,1,1,1,0],
-    "am": [-1,0,2,2,1,0],
-    "a7": [-1,0,2,0,2,0],
-    "b": [-1,2,4,4,4,2],
-    "bm": [-1,2,4,4,3,2],
-    "b7": [-1,2,1,2,0,2],
-    "c": [-1,3,2,0,1,0],
-    "cm": [-1,3,5,5,4,3],
-    "c7": [-1,3,2,3,1,0],
-    "d": [-1,-1,0,2,3,2],
-    "dm": [-1,-1,0,2,3,1],
-    "d7": [-1,-1,0,2,1,2],
-    "e": [0,2,2,1,0,0],
-    "em": [0,2,2,0,0,0],
-    "e7": [0,2,0,1,0,0],
-    "f": [1,3,3,2,1,1],
-    "fm": [1,3,3,1,1,1],
-    "f7": [1,3,1,2,1,1],
-    "g": [3,2,0,0,0,2],
-    "gm": [3,5,5,3,3,3],
-    "g7": [3,2,0,0,0,1]
-  },
-  "mandolin": {
-    "a": [2,2,0,0],
-    "b": [4,4,6,7],
-    "c": [0,2,3,0],
-    "d": [2,0,0,2],
-    "e": [4,2,2,0],
-    "f": [5,3,0,1],
-    "g": [0,0,2,3]
-  },
-  "ukulele": {
-    "a": [2,1,0,0],
-    "b": [4,3,2,2],
-    "c": [0,0,0,3],
-    "d": [2,2,2,5],
-    "e": [4,4,4,2],
-    "f": [2,0,1,0],
-    "g": [0,2,3,2],
-    "am": [2,0,0,0],
-    "bm": [4,2,2,2],
-    "cm": [0,3,3,3],
-    "dm": [2,2,1,0],
-    "em": [0,4,3,2],
-    "fm": [1,0,1,3],
-    "gm": [0,2,3,1],
-    "a7": [0,1,0,0],
-    "b7": [2,3,2,2],
-    "c7": [0,0,0,1],
-    "d7": [2,2,2,3],
-    "e7": [0,2,0,2],
-    "f7": [2,3,1,0],
-    "g7": [0,2,1,2]
+var instruments = {
+  "guitar": ["E", "A", "D", "G", "B", "E"],
+  "mandolin": ["G", "D", "A", "E"],
+  "ukulele": ["G", "C", "E", "A"] 
+};
+
+var progress = ["A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab"];
+
+function distance(org, end) {
+  var place = progress.indexOf(org);
+  var note = progress.indexOf(end);
+  if (note - place >= 0)
+    return note - place;
+  else
+    return progress.length - place + note;
+}
+
+function findSmallestPositive(arr) {
+  var small = 1000;
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] < small && arr[i] >= 0) {
+      small = arr[i];
+    }
   }
- };
+  return small;
+}
+
+function tabPositions(chordName, base) {
+  var tabs = [];
+  for (var b = 0; b < base.length; b++) {
+    var cd = chordsData[chordName];
+    if (cd == undefined)
+      return undefined;
+    var darr = [];
+    for (var i = 0; i < cd.length; i++) {
+      darr.push(distance(base[b], cd[i]));
+    }
+    var idx = findSmallestPositive(darr);
+    tabs.push(idx);
+  }
+  return tabs;
+}
 
 /**
  * svg()
@@ -178,11 +159,11 @@ function calcFinger(s, p, ts) {
 
 function chordName(n) {
   var el = document.createElementNS(XLMNS, "text");
-  el.setAttribute('x', 0);
-  el.setAttribute('y', 60);
+  el.setAttribute('x', 90);
+  el.setAttribute('y', 180);
   el.setAttribute('font-family', "Verdana");
   el.setAttribute('font-size', "25");
-  el.innerHTML = n.toUpperCase();
+  el.innerHTML = n;
 
   return el; 
 }
@@ -191,9 +172,9 @@ var els = document.getElementsByTagName("c-tab");
 for (var i=0; i<els.length; i++) {
   var chord = els[i].getAttribute('chord');
   var instrument = els[i].getAttribute('instrument');
-  var note = chordJson[instrument][chord];
+  var note = tabPositions(chord, instruments[instrument]);
   if (note == undefined) {
-    console.error("instrument or chord not available");
+    console.error("instrument " + instrument + " or chord " + chord + " not available ");
     continue;
   }
   var tab = svg();
