@@ -20,6 +20,7 @@ var chordsData = {
 };
 
 var instruments = {
+  "banjo": ["G", "D", "G", "B", "D"],
   "guitar": ["E", "A", "D", "G", "B", "E"],
   "mandolin": ["G", "D", "A", "E"],
   "ukulele": ["G", "C", "E", "A"] 

@@ -9,7 +9,7 @@ svg {
 }
 </style>
 
-<c-tab chord="g" instrument="guitar"></c-tab>
+<c-tab chord="G" instrument="guitar"></c-tab>
 
 <script src="https://gitcdn.xyz/repo/blh0021/chordTab/master/src/tab.min.js"></script>
 ```
