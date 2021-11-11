@@ -12,6 +12,6 @@
   "author": "Ben Harrington",
   "license": "ISC",
   "dependencies": {
-    "uglify-js": "^2.4.10"
+    "uglify-js": "^3.14.3"
   }
 }
